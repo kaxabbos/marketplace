@@ -26,19 +26,19 @@ public class ProductService {
         }
     }
 
-    public Product save(Product product, String category) {
-        product.setCategory(categoryService.findByName(category));
-        return repository.save(product);
+    public Product save(Product save, String category) {
+        save.setCategory(categoryService.findByName(category));
+        return repository.save(save);
     }
 
-    public Product update(String productId, Product product, String category) {
+    public Product updateById(String productId, Product update, String category) {
         Product old = findById(productId);
-        old.set(product);
+        old.set(update);
         old.setCategory(categoryService.findByName(category));
         return repository.save(old);
     }
 
-    public void delete(String productId) {
+    public void deleteById(String productId) {
         Product product = findById(productId);
         repository.deleteById(product.getId());
     }

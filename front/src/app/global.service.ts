@@ -7,18 +7,6 @@ import {HttpHeaders} from "@angular/common/http";
 
 export class GlobalService {
 
-	public set(userid: number, role: string, token: string) {
-		this.userid = userid;
-		this.role = role;
-		this.token = token;
-	}
-
-	public clear() {
-		this.userid = 0;
-		this.role = 'NOT';
-		this.token = '';
-	}
-
 	get userid(): number {
 		return Number(localStorage.getItem('userid')) || 0;
 	}
@@ -65,5 +53,17 @@ export class GlobalService {
 			'enctype': 'multipart/form-data',
 			'Authorization': 'Bearer ' + this.token,
 		});
+	}
+
+	public set(userid: number, role: string, token: string) {
+		this.userid = userid;
+		this.role = role;
+		this.token = token;
+	}
+
+	public clear() {
+		this.userid = 0;
+		this.role = 'NOT';
+		this.token = '';
 	}
 }

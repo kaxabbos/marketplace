@@ -10,6 +10,11 @@
 				<li class="nav-item" data-aos="zoom-in">
 					<a (click)="router.navigate(['/'])" class="nav-link" role="button">Главная</a>
 				</li>
+
+				<li class="nav-item" data-aos="zoom-in">
+					<a (click)="router.navigate(['/products'])" class="nav-link" role="button">Товары</a>
+				</li>
+
 				<li *ngIf="getRole() === 'ADMIN'" class="nav-item" data-aos="zoom-in">
 					<a (click)="router.navigate(['/users'])" class="nav-link" role="button">Пользователи</a>
 				</li>

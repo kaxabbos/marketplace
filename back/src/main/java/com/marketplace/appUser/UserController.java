@@ -33,7 +33,7 @@ public class UserController {
         );
     }
 
-    @Secured({ADMIN, MANAGER, USER})
+    @Secured({ADMIN, MANAGER, SELLER, USER})
     @GetMapping("/profile")
     public Result find() {
         return new Result(
