@@ -2,6 +2,7 @@ package com.marketplace.product;
 
 import com.marketplace.appUser.AppUser;
 import com.marketplace.category.Category;
+import com.marketplace.enums.ProductStatus;
 import com.marketplace.product.img.ProductImg;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,6 +32,9 @@ public class Product {
     @Column(length = 5000)
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status = ProductStatus.WAITING;
+
     @ManyToOne
     private Category category;
     @ManyToOne
@@ -38,22 +42,20 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImg> imgs = new ArrayList<>();
 
-    public Product(String name, String bind, int count, float price, String description, Category category) {
+    public Product(String name, String bind, int count, float price, String description) {
         this.name = name;
         this.bind = bind;
         this.count = count;
         this.price = price;
         this.description = description;
-        this.category = category;
     }
 
-    public void set(String name, String bind, int count, float price, String description, Category category) {
-        this.name = name;
-        this.bind = bind;
-        this.count = count;
-        this.price = price;
-        this.description = description;
-        this.category = category;
+    public void set(Product product) {
+        this.name = product.getName();
+        this.bind = product.getBind();
+        this.count = product.getCount();
+        this.price = product.getPrice();
+        this.description = product.getDescription();
     }
 
     public List<String> getImgsString() {

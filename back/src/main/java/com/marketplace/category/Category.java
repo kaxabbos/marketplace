@@ -26,4 +26,11 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 
+    public Category(String name) {
+        this.name = name;
+    }
+
+    public void set(Category category) {
+        this.name = category.getName();
+    }
 }

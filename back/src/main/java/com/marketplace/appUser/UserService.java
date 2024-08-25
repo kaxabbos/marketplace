@@ -44,8 +44,7 @@ public class UserService implements UserDetailsService {
 
     public AppUser findById(String id) {
         try {
-            Long longId = Long.parseLong(id);
-            return repository.findById(longId).orElseThrow();
+            return repository.findById(Long.parseLong(id)).orElseThrow();
         } catch (Exception e) {
             throw new ObjectNotFoundException("Не найден пользователь с ИД: " + id);
         }

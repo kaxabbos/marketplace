@@ -16,7 +16,7 @@ public class ProductImgService {
 
     private final ProductImgRepository repository;
 
-    public ProductImg save(MultipartFile file, Product product) {
+    public void save(MultipartFile file, Product product) {
         String img;
 
         try {
@@ -29,7 +29,7 @@ public class ProductImgService {
             throw new BadRequestException("Некорректное изображение");
         }
 
-        return repository.save(new ProductImg(img, product));
+        repository.save(new ProductImg(img, product));
     }
 
 }
