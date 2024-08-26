@@ -1,24 +1,24 @@
 import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {NgIf} from "@angular/common";
 import {AuthService} from "../../auth/auth.service";
 import {GlobalService} from "../../global.service";
-import {Router} from "@angular/router";
-import {NgIf} from "@angular/common";
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../product.service";
 import {CategoryService} from "../../category/category.service";
 
 @Component({
-	selector: 'app-product-add',
+	selector: 'app-product-update',
 	standalone: true,
 	imports: [
+		FormsModule,
 		NgIf,
-		ReactiveFormsModule,
-		FormsModule
+		ReactiveFormsModule
 	],
-	templateUrl: './product-add.component.html',
+	templateUrl: './product-update.component.html',
 })
 
-export class ProductAddComponent implements OnInit {
+export class ProductUpdateComponent implements OnInit {
 	productForm = new FormGroup({
 		name: new FormControl("", [Validators.required, Validators.minLength(1), Validators.maxLength(255)]),
 		bind: new FormControl("", [Validators.required, Validators.minLength(1), Validators.maxLength(255)]),
@@ -27,6 +27,8 @@ export class ProductAddComponent implements OnInit {
 		price: new FormControl("", [Validators.required, Validators.min(0.01), Validators.maxLength(1000)]),
 		description: new FormControl("", [Validators.required, Validators.minLength(1), Validators.maxLength(5000)]),
 	})
+
+	id: any;
 
 	categories: any[] = [];
 
@@ -37,6 +39,7 @@ export class ProductAddComponent implements OnInit {
 		private global: GlobalService,
 		public router: Router,
 		private productService: ProductService,
+		private activatedRoute: ActivatedRoute,
 		private categoryService: CategoryService,
 	) {
 	}
@@ -46,6 +49,28 @@ export class ProductAddComponent implements OnInit {
 			if (this.global.role !== 'SELLER') this.router.navigate(['/login']);
 		});
 
+		this.activatedRoute.queryParams.subscribe((params) => {
+			this.id = params['id'];
+		})
+
+		this.productService.findById(this.id).subscribe({
+			next: ((res: any) => {
+				if (this.global.userid != res.data.ownerId) this.router.navigate(['/products']);
+
+				this.productForm.setValue({
+					name: res.data.name,
+					bind: res.data.bind,
+					category: res.data.category,
+					count: res.data.count,
+					price: res.data.price,
+					description: res.data.description
+				})
+			}),
+			error: ((e: any) => {
+				console.log(e.error)
+			})
+		})
+
 		this.categoryService.categorySubject.subscribe(value => {
 			this.categories = value.categories;
 		})
@@ -53,8 +78,8 @@ export class ProductAddComponent implements OnInit {
 		this.categoryService.findAll();
 	}
 
-	save() {
-		this.productService.save(this.productForm.value).subscribe({
+	update() {
+		this.productService.update(this.id, this.productForm.value).subscribe({
 			next: ((res: any) => {
 				this.router.navigate(['/product'], {queryParams: {id: res.data.id}});
 			}),
@@ -63,4 +88,12 @@ export class ProductAddComponent implements OnInit {
 			})
 		})
 	}
+
+	getProductPge() {
+		return this.router.navigate(
+			['/product'],
+			{queryParams: {id: this.id}}
+		);
+	}
+
 }

@@ -1,9 +1,6 @@
 package com.marketplace.product;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -18,20 +15,25 @@ public record ProductDto(
         @Size(min = 1, max = 255, message = "name length = 1-255")
         String bind,
 
+        @NotNull(message = "count is required")
         @Min(value = 0, message = "count min = 0")
         @Max(value = 1000, message = "count max = 1000")
-        int count,
+        Integer count,
 
-        @Min(value = 1, message = "price min = 0.01")
+        @NotNull(message = "price is required")
+        @Min(value = 0, message = "price min = 0")
         @Max(value = 1000, message = "price max = 1000")
-        float price,
+        Float price,
 
         @NotEmpty(message = "description is required")
         @Size(min = 1, max = 5000, message = "category length = 1-5000")
         String description,
 
+        String status,
+        String statusName,
         String category,
         Long ownerId,
+        String img,
         List<String> imgs
 ) {
 }

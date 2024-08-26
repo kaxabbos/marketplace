@@ -16,8 +16,11 @@ public class ProductToProductDtoConverter implements Converter<Product, ProductD
                 source.getCount(),
                 source.getPrice(),
                 source.getDescription(),
+                source.getStatus().name(),
+                source.getStatus().getName(),
                 source.getCategory().getName(),
                 source.getOwner().getId(),
+                source.getImg(),
                 source.getImgsString()
         );
     }

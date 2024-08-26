@@ -1,23 +1,23 @@
 <div class="container">
 
-	<h1 class="text-center mb-5" data-aos="zoom-in">Добавить</h1>
+	<h1 class="text-center mb-5" data-aos="zoom-in">Обновить</h1>
 
 	<div class="d-flex justify-content-center mb-5" data-aos="zoom-in">
-		<a (click)="router.navigate(['/products'])" class="btn btn-primary">Назад</a>
+		<a (click)="getProductPge()" class="btn btn-primary">Назад</a>
 	</div>
 
 	<div *ngIf="message" class="alert alert-primary text-center fw-bold mb-5" data-aos="zoom-in" role="alert">
 		{{ message }}
 	</div>
 
-	<form [formGroup]="productForm" (ngSubmit)="save()" class="row" data-aos="fade-up">
+	<form [formGroup]="productForm" (ngSubmit)="update()" class="row" data-aos="fade-up">
 		<div class="col-6 mb-2">
 			<p class="fs-4 m-0">Наименование</p>
 			<input type="text" class="form-control" formControlName="name" minlength="1" maxlength="255">
 		</div>
 		<div class="col-6 mb-2">
 			<p class="fs-4 m-0">Связующее имя</p>
-			<input type="text" class="form-control" formControlName="bind"  minlength="1" maxlength="255">
+			<input type="text" class="form-control" formControlName="bind" minlength="1" maxlength="255">
 		</div>
 		<div class="col-4 mb-2">
 			<p class="fs-4 m-0">Категория</p>
@@ -41,8 +41,9 @@
 			<textarea class="form-control" formControlName="description" minlength="1" maxlength="5000"></textarea>
 		</div>
 		<div class="col-12 mb-2">
-			<button *ngIf="productForm.valid" type="submit" class="btn btn-primary w-100">Добавить</button>
+			<button *ngIf="productForm.valid" type="submit" class="btn btn-success w-100">Обновить</button>
 		</div>
 	</form>
+
 
 </div>

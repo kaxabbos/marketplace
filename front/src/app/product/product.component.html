@@ -2,16 +2,33 @@
 
 	<h1 class="text-center mb-5" data-aos="zoom-in">Товары</h1>
 
-	<div class="d-flex justify-content-center" data-aos="fade-up">
-		<a (click)="router.navigate(['/productAdd'])" class="btn btn-primary">Добавить</a>
+	<div *ngIf="getRole() === 'SELLER'" class="d-flex justify-content-center mb-3 row" data-aos="zoom-in">
+		<div class="col-auto">
+			<a (click)="router.navigate(['/productAdd'])" class="btn btn-primary">Добавить</a>
+		</div>
 	</div>
 
-	<div>
-
+	<div class="row mb-3" data-aos="zoom-in">
+		<div class="col">
+			<input type="text" [(ngModel)]="filterName" class="form-control" placeholder="Наименование">
+		</div>
+		<div class="col">
+			<input type="text" [(ngModel)]="filterCategory" class="form-control" placeholder="Категория"
+				   list="category">
+			<datalist id="category">
+				@for (i of categories; track i.id) {
+					<option [value]="i.name"></option>
+				}
+			</datalist>
+		</div>
 	</div>
 
-	<div>
-
+	<div class="row">
+		@for (i of productsSorted(); track i.id) {
+			<div class="col-3 mb-2">
+				<app-product-card [product]="i"></app-product-card>
+			</div>
+		}
 	</div>
 
 

@@ -52,7 +52,7 @@ public class SecurityConfiguration {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
 
         SecureRandom secureRandom = new SecureRandom();
-        secureRandom.setSeed(1024L);
+        secureRandom.setSeed(2048L);
         keyPairGenerator.initialize(2048, secureRandom);
 
 //        keyPairGenerator.initialize(2048);

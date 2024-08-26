@@ -43,6 +43,17 @@ public class ProductController {
         );
     }
 
+    @Secured({ADMIN, MANAGER, SELLER, USER})
+    @GetMapping("/bind")
+    public Result findAllByBind(@RequestParam String bind) {
+        return new Result(
+                true,
+                StatusCode.SUCCESS,
+                "Success Find All By Bind",
+                service.findAllByBind(bind).stream().map(toDtoConverter::convert).collect(Collectors.toList())
+        );
+    }
+
     @Secured({SELLER})
     @PostMapping
     public Result save(@Valid @RequestBody ProductDto productDto, @RequestParam String category) {
@@ -59,9 +70,9 @@ public class ProductController {
 
     @Secured({SELLER})
     @PutMapping("/{id}")
-    public Result updateById(@PathVariable String id, @Valid @RequestBody ProductDto productDto, @RequestParam String category) {
+    public Result update(@PathVariable String id, @Valid @RequestBody ProductDto productDto, @RequestParam String category) {
         Product update = toConverter.convert(productDto);
-        Product updated = service.updateById(id, update, category);
+        Product updated = service.update(id, update, category);
         ProductDto updatedDto = toDtoConverter.convert(updated);
         return new Result(
                 true,

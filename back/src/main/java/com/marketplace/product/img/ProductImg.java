@@ -14,8 +14,8 @@ import lombok.Setter;
 public class ProductImg {
     @Id
     @Setter(AccessLevel.NONE)
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "product_g")
-    @SequenceGenerator(name = "product_g", sequenceName = "product_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "product_img_g")
+    @SequenceGenerator(name = "product_img_g", sequenceName = "product_img_seq", allocationSize = 1)
     private Long id;
 
     @Column(length = 1000)

@@ -1,0 +1,42 @@
+<div class="container">
+
+	<h1 class="text-center mb-5" data-aos="zoom-in">{{ product.name }}</h1>
+
+	<div class="d-flex justify-content-center mb-5 row" data-aos="zoom-in">
+		<div class="col-auto">
+			<a (click)="router.navigate(['/products'])" class="btn btn-primary">Назад</a>
+		</div>
+		<div *ngIf="checkOwner()" class="col-auto">
+			<a (click)="productUpdatePage()" class="btn btn-success">Обновить</a>
+		</div>
+		<div *ngIf="checkOwner()" class="col-auto">
+			<a (click)="router.navigate(['/products'])" class="btn btn-danger">Удалить</a>
+		</div>
+	</div>
+
+	<div class="row" data-aos="fade-up">
+		<div class="col-4">
+			<img [src]="product.img" alt="img" class="object-fit-cover w-100" style="height: 300px">
+		</div>
+		<div class="col">
+			<p *ngIf="checkOwner()" class="fs-4 m-0">{{ 'Статус: ' + product.statusName }}</p>
+			<p *ngIf="checkOwner()" class="fs-4 m-0">{{ 'Связующее слово: ' + product.bind }}</p>
+			<p class="fs-4 m-0">{{ 'Категория: ' + product.category }}</p>
+			<p class="fs-4 m-0">{{ 'Количество: ' + product.count }}</p>
+			<p class="fs-4 m-0">{{ 'Цена: ' + product.price }}</p>
+		</div>
+		<div class="col-12 mt-2">
+			<p class="fs-4 m-0">{{ 'Описание: ' + product.description }}</p>
+		</div>
+	</div>
+
+	<div *ngIf="products.length > 1" class="overflow-x-scroll row" style="overflow-x: auto;white-space: nowrap">
+		<section *ngFor="let i of products" style="width: 300px; display: inline-block;vertical-align: top;" class="col-auto" data-aos="fade-up">
+			<img [src]="i.img" alt="img" class="object-fit-cover w-100" style="height: 200px">
+		</section>
+	</div>
+
+
+
+
+</div>
