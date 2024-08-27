@@ -6,6 +6,7 @@
 
 	<p class="fs-4 m-0 text-center">{{ product.name }}</p>
 
+	<p *ngIf="checkOwner() || getRole() === 'MANAGER'" class="fs-5 m-0">{{ 'Статус: ' + product.statusName }}</p>
 	<p class="fs-5 m-0">{{ 'Категория: ' + product.category }}</p>
 	<p class="fs-5 m-0">{{ 'Количество: ' + product.count }}</p>
 	<p class="fs-5 m-0">{{ 'Цена: ' + product.price }}</p>

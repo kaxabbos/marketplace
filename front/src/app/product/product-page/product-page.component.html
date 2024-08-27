@@ -1,43 +1,72 @@
 <div class="container">
 
-	<h1 class="text-center mb-5" data-aos="zoom-in">{{ product.name }}</h1>
+	<h1 class="text-center mb-3" data-aos="zoom-in">{{ product.name }}</h1>
 
-	<div class="d-flex justify-content-center mb-5 row" data-aos="zoom-in">
+	<div *ngIf="message" class="alert alert-primary text-center fw-bold mb-3" data-aos="zoom-in" role="alert">
+		{{ message }}
+	</div>
+
+	<div class="d-flex justify-content-center mb-3 row" data-aos="zoom-in">
 		<div class="col-auto">
-			<a (click)="router.navigate(['/products'])" class="btn btn-primary">Назад</a>
+			<button (click)="router.navigate(['/products'])" class="btn btn-primary">Назад</button>
 		</div>
 		<div *ngIf="checkOwner()" class="col-auto">
-			<a (click)="productUpdatePage()" class="btn btn-success">Обновить</a>
+			<button (click)="productUpdatePage()" class="btn btn-success">Обновить</button>
 		</div>
 		<div *ngIf="checkOwner()" class="col-auto">
-			<a (click)="router.navigate(['/products'])" class="btn btn-danger">Удалить</a>
+			<button (click)="delete()" class="btn btn-danger">Удалить</button>
+		</div>
+
+		<div *ngIf="getRole() === 'MANAGER' && product.status === 'WAITING'" class="col-auto">
+			<button (click)="active()" class="btn btn-secondary">Подтвердить</button>
+		</div>
+		<div *ngIf="checkOwner() && product.status !== 'ARCHIVE'" class="col-auto">
+			<button (click)="archive()" class="btn btn-secondary">В архив</button>
+		</div>
+		<div *ngIf="checkOwner() && (product.status === 'ARCHIVE' || product.status === 'REFINE')" class="col-auto">
+			<button (click)="waiting()" class="btn btn-secondary">На проверку</button>
 		</div>
 	</div>
 
+	<div *ngIf="getRole() === 'MANAGER' && product.status === 'WAITING'" class="mb-3" data-aos="zoom-in">
+		<textarea [(ngModel)]="refineMessage" class="form-control mb-2" placeholder="Причина доработки"></textarea>
+		<button (click)="refine()" *ngIf="refineMessage.length > 0" class="btn btn-secondary w-100" data-aos="zoom-in">
+			На доработку
+		</button>
+	</div>
+
 	<div class="row mb-3" data-aos="fade-up">
-		<div class="col-4">
+		<div class="col-3">
 			<img [src]="product.img" alt="img" class="object-fit-cover w-100" style="height: 300px">
 		</div>
 		<div class="col">
-			<p *ngIf="checkOwner()" class="fs-4 m-0">{{ 'Статус: ' + product.statusName }}</p>
+			<p *ngIf="checkOwner() || getRole() === 'MANAGER'"
+			   class="fs-4 m-0">{{ 'Статус: ' + product.statusName }}</p>
+			<p *ngIf="(checkOwner() || getRole() === 'MANAGER') && product.refine.length > 0"
+			   class="fs-4 m-0">{{ 'Причина доработки: ' + product.refine }}</p>
 			<p *ngIf="checkOwner()" class="fs-4 m-0">{{ 'Связующее слово: ' + product.bind }}</p>
 			<p class="fs-4 m-0">{{ 'Категория: ' + product.category }}</p>
 			<p class="fs-4 m-0">{{ 'Количество: ' + product.count }}</p>
 			<p class="fs-4 m-0">{{ 'Цена: ' + product.price }}</p>
 		</div>
+		<div class="col-3 overflow-auto" style="height: 300px">
+			<div *ngFor="let i of productsSorted()" [class]="check(i.id)">
+				<a (click)="productPage(i.id)" type="button">
+					<div class="row">
+						<div class="col">
+							<img [src]="i.img" alt="img" class="object-fit-cover w-100" style="height: 100px">
+						</div>
+						<div class="col">
+							<p class="fs-5 m-0">{{ i.name }}</p>
+							<p class="fs-6 m-0">{{ "Количество: " + i.count }}</p>
+							<p class="fs-6 m-0">{{ "Цена: " + i.price }}</p>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
 		<div class="col-12 mt-2">
 			<p class="fs-4 m-0">{{ 'Описание: ' + product.description }}</p>
-		</div>
-	</div>
-
-	<div *ngIf="products.length > 1" class="row" data-aos="fade-up">
-		<div *ngFor="let i of products" [class]="check(i.id)">
-			<a (click)="productPage(i.id)" type="button">
-				<img [src]="i.img" alt="img" class="object-fit-cover w-100" style="height: 150px">
-				<p class="fs-5 m-0 text-center">{{ i.name }}</p>
-				<p class="fs-6 m-0">{{ "Количество: " + i.count }}</p>
-				<p class="fs-6 m-0">{{ "Цена: " + i.price }}</p>
-			</a>
 		</div>
 	</div>
 

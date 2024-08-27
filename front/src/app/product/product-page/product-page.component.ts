@@ -4,18 +4,32 @@ import {GlobalService} from "../../global.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../product.service";
 import {NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
 	selector: 'app-product-page',
 	standalone: true,
 	imports: [
 		NgIf,
-		NgForOf
+		NgForOf,
+		FormsModule
 	],
 	templateUrl: './product-page.component.html',
 })
 
 export class ProductPageComponent implements OnInit {
+
+	message: string = '';
+	refineMessage: string = '';
+
+	id: number = 0;
+
+	product: any = {
+		name: ''
+	};
+
+	products: any[] = []
+
 	constructor(
 		private authService: AuthService,
 		private global: GlobalService,
@@ -25,12 +39,11 @@ export class ProductPageComponent implements OnInit {
 	) {
 	}
 
-	id: any;
-	product: any = {
-		name: ''
-	};
-
-	products: any[] = []
+	productsSorted() {
+		let temp = this.products;
+		temp = temp.sort((a, b) => a.id < b.id ? 1 : -1);
+		return temp;
+	}
 
 	ngOnInit(): void {
 		this.authService.getUserProfile().add(() => {
@@ -51,10 +64,12 @@ export class ProductPageComponent implements OnInit {
 							['/error'],
 							{queryParams: {message: e.error.message}}
 						);
+					} else {
+						this.router.navigate(['/login']);
 					}
 				})
 			}).add(() => {
-				this.productService.findAllByBind(this.product.bind).subscribe({
+				this.productService.findAllByBind(this.product.bind, this.product.ownerId).subscribe({
 					next: ((res: any) => {
 						this.products = res.data;
 					}),
@@ -80,12 +95,82 @@ export class ProductPageComponent implements OnInit {
 
 	check(id: number) {
 		if (id == this.id) {
-			return "col-2 mb-2 p-2 bg-secondary";
+			return "mb-2 p-2 bg-secondary";
 		}
-		return "col-2 mb-2 p-2";
+		return "mb-2 p-2";
 	}
 
 	productPage(id: number) {
-		this.router.navigate(['/product'], {queryParams: {id: id}});
+		this.id = id;
+		this.product = this.products.find((product) => product.id == id);
+	}
+
+	delete() {
+		this.productService.delete(this.id).subscribe({
+			next: (() => {
+				this.router.navigate(['/products'])
+			}),
+			error: ((e: any) => {
+				console.log(e.error);
+				this.message = e.error.message;
+			})
+		})
+	}
+
+	active() {
+		this.productService.active(this.id).subscribe({
+			next: ((res: any) => {
+				this.id = res.data.id;
+				this.product = res.data;
+				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
+			}),
+			error: ((e) => {
+				console.log(e.error);
+				this.message = e.error.message;
+			})
+		})
+	}
+
+	refine() {
+		this.productService.refine(this.id, this.refineMessage).subscribe({
+			next: ((res: any) => {
+				this.id = res.data.id;
+				this.product = res.data;
+				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
+				this.refineMessage = '';
+			}),
+			error: ((e) => {
+				console.log(e.error);
+				this.message = e.error.message;
+			})
+		})
+	}
+
+	waiting() {
+		this.productService.waiting(this.id).subscribe({
+			next: ((res: any) => {
+				this.id = res.data.id;
+				this.product = res.data;
+				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
+			}),
+			error: ((e) => {
+				console.log(e.error);
+				this.message = e.error.message;
+			})
+		})
+	}
+
+	archive() {
+		this.productService.archive(this.id).subscribe({
+			next: ((res: any) => {
+				this.id = res.data.id;
+				this.product = res.data;
+				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
+			}),
+			error: ((e) => {
+				console.log(e.error);
+				this.message = e.error.message;
+			})
+		})
 	}
 }

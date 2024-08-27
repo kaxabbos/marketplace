@@ -31,6 +31,8 @@ public class Product {
 
     @Column(length = 5000)
     private String description;
+    @Column(length = 5000)
+    private String refine = "";
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status = ProductStatus.WAITING;

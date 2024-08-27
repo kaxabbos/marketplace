@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 public enum ProductStatus {
     WAITING("Ожидание"),
-    ACTIVE("Ожидание"),
+    ACTIVE("Активно"),
     REFINE("Доработать"),
-    ARCHIVE("Ожидание"),
+    ARCHIVE("Архив"),
     ;
 
     private final String name;

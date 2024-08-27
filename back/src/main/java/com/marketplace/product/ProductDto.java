@@ -32,8 +32,12 @@ public record ProductDto(
 
         String status,
         String statusName,
+
         String category,
+        String refine,
+
         Long ownerId,
+
         String img,
         List<ProductImgDto> imgs
 ) {

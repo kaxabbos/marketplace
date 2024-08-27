@@ -27,6 +27,7 @@ public class ProductToProductDtoConverter implements Converter<Product, ProductD
                 source.getStatus().name(),
                 source.getStatus().getName(),
                 source.getCategory().getName(),
+                source.getRefine(),
                 source.getOwner().getId(),
                 source.getImg(),
                 source.getImgs().stream().map(productImgToProductImgDtoConverter::convert).collect(Collectors.toList())

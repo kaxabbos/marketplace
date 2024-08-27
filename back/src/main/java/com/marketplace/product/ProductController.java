@@ -43,14 +43,58 @@ public class ProductController {
         );
     }
 
+    @Secured({MANAGER})
+    @GetMapping("/{id}/active")
+    public Result active(@PathVariable String id) {
+        return new Result(
+                true,
+                StatusCode.SUCCESS,
+                "Success Active",
+                toDtoConverter.convert(service.active(id))
+        );
+    }
+
+    @Secured({MANAGER})
+    @GetMapping("/{id}/refine")
+    public Result refine(@PathVariable String id,@RequestParam String refine) {
+        return new Result(
+                true,
+                StatusCode.SUCCESS,
+                "Success Refine",
+                toDtoConverter.convert(service.refine(id,refine))
+        );
+    }
+
+    @Secured({SELLER})
+    @GetMapping("/{id}/waiting")
+    public Result waiting(@PathVariable String id) {
+        return new Result(
+                true,
+                StatusCode.SUCCESS,
+                "Success Refine",
+                toDtoConverter.convert(service.waiting(id))
+        );
+    }
+
+    @Secured({SELLER})
+    @GetMapping("/{id}/archive")
+    public Result archive(@PathVariable String id) {
+        return new Result(
+                true,
+                StatusCode.SUCCESS,
+                "Success Refine",
+                toDtoConverter.convert(service.archive(id))
+        );
+    }
+
     @Secured({ADMIN, MANAGER, SELLER, USER})
     @GetMapping("/bind")
-    public Result findAllByBind(@RequestParam String bind) {
+    public Result findAllByBind(@RequestParam String bind, @RequestParam String ownerId) {
         return new Result(
                 true,
                 StatusCode.SUCCESS,
                 "Success Find All By Bind",
-                service.findAllByBind(bind).stream().map(toDtoConverter::convert).collect(Collectors.toList())
+                service.findAllByBind(bind, ownerId).stream().map(toDtoConverter::convert).collect(Collectors.toList())
         );
     }
 
@@ -82,7 +126,7 @@ public class ProductController {
         );
     }
 
-    @Secured({ADMIN, MANAGER, SELLER})
+    @Secured({SELLER})
     @DeleteMapping("/{id}")
     public Result deleteById(@PathVariable String id) {
         service.deleteById(id);

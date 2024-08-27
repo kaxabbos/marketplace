@@ -28,7 +28,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
@@ -50,13 +49,7 @@ public class SecurityConfiguration {
         this.customBearerTokenAccessDeniedHandler = customBearerTokenAccessDeniedHandler;
 
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-
-        SecureRandom secureRandom = new SecureRandom();
-        secureRandom.setSeed(2048);
-        keyPairGenerator.initialize(2048, secureRandom);
-
-//        keyPairGenerator.initialize(2048);
-
+        keyPairGenerator.initialize(2048);
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         publicKey = (RSAPublicKey) keyPair.getPublic();
         privateKey = (RSAPrivateKey) keyPair.getPrivate();

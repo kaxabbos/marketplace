@@ -32,13 +32,14 @@ export class ProductService {
 		})
 	}
 
-	public findAllByBind(bind: string) {
+	public findAllByBind(bind: string, ownerId: number) {
 		return this.http.get(
 			this.global.backendURL + '/products/bind',
 			{
 				headers: this.global.headersToken,
 				params: new HttpParams().appendAll({
-					bind: bind
+					bind: bind,
+					ownerId: ownerId,
 				})
 			}
 		)
@@ -70,6 +71,44 @@ export class ProductService {
 				headers: this.global.headersJsonToken,
 				params: new HttpParams().appendAll({category: product.category}),
 			}
+		)
+	}
+
+	public delete(id: number) {
+		return this.http.delete(
+			this.global.backendURL + `/products/${id}`,
+			{headers: this.global.headersToken}
+		)
+	}
+
+	public active(id: number) {
+		return this.http.get(
+			this.global.backendURL + `/products/${id}/active`,
+			{headers: this.global.headersToken}
+		)
+	}
+
+	public refine(id: number, refine: string) {
+		return this.http.get(
+			this.global.backendURL + `/products/${id}/refine`,
+			{
+				headers: this.global.headersToken,
+				params: new HttpParams().appendAll({refine: refine})
+			}
+		)
+	}
+
+	public waiting(id: number) {
+		return this.http.get(
+			this.global.backendURL + `/products/${id}/waiting`,
+			{headers: this.global.headersToken}
+		)
+	}
+
+	public archive(id: number) {
+		return this.http.get(
+			this.global.backendURL + `/products/${id}/archive`,
+			{headers: this.global.headersToken}
 		)
 	}
 

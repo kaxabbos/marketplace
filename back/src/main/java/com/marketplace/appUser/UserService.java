@@ -82,4 +82,10 @@ public class UserService implements UserDetailsService {
         repository.deleteById(user.getId());
     }
 
+    public void checkOwner(Long id) {
+        if (!getCurrentUser().getId().equals(id)) {
+            throw new BadRequestException("Нету прав");
+        }
+    }
+
 }
