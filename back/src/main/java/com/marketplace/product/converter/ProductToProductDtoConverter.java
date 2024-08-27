@@ -2,11 +2,19 @@ package com.marketplace.product.converter;
 
 import com.marketplace.product.Product;
 import com.marketplace.product.ProductDto;
+import com.marketplace.product.img.converter.ProductImgToProductImgDtoConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 @Service
+@RequiredArgsConstructor
 public class ProductToProductDtoConverter implements Converter<Product, ProductDto> {
+
+    private final ProductImgToProductImgDtoConverter productImgToProductImgDtoConverter;
+
     @Override
     public ProductDto convert(Product source) {
         return new ProductDto(
@@ -21,7 +29,7 @@ public class ProductToProductDtoConverter implements Converter<Product, ProductD
                 source.getCategory().getName(),
                 source.getOwner().getId(),
                 source.getImg(),
-                source.getImgsString()
+                source.getImgs().stream().map(productImgToProductImgDtoConverter::convert).collect(Collectors.toList())
         );
     }
 }

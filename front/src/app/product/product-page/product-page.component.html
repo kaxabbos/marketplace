@@ -14,7 +14,7 @@
 		</div>
 	</div>
 
-	<div class="row" data-aos="fade-up">
+	<div class="row mb-3" data-aos="fade-up">
 		<div class="col-4">
 			<img [src]="product.img" alt="img" class="object-fit-cover w-100" style="height: 300px">
 		</div>
@@ -30,13 +30,15 @@
 		</div>
 	</div>
 
-	<div *ngIf="products.length > 1" class="overflow-x-scroll row" style="overflow-x: auto;white-space: nowrap">
-		<section *ngFor="let i of products" style="width: 300px; display: inline-block;vertical-align: top;" class="col-auto" data-aos="fade-up">
-			<img [src]="i.img" alt="img" class="object-fit-cover w-100" style="height: 200px">
-		</section>
+	<div *ngIf="products.length > 1" class="row" data-aos="fade-up">
+		<div *ngFor="let i of products" [class]="check(i.id)">
+			<a (click)="productPage(i.id)" type="button">
+				<img [src]="i.img" alt="img" class="object-fit-cover w-100" style="height: 150px">
+				<p class="fs-5 m-0 text-center">{{ i.name }}</p>
+				<p class="fs-6 m-0">{{ "Количество: " + i.count }}</p>
+				<p class="fs-6 m-0">{{ "Цена: " + i.price }}</p>
+			</a>
+		</div>
 	</div>
-
-
-
 
 </div>

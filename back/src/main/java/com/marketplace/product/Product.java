@@ -58,10 +58,6 @@ public class Product {
         this.description = product.getDescription();
     }
 
-    public List<String> getImgsString() {
-        return imgs.stream().map(ProductImg::getImg).toList();
-    }
-
     public String getImg() {
         if (imgs.isEmpty()) {
             return "/img/no_img.png";

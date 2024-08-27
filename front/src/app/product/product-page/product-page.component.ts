@@ -77,4 +77,15 @@ export class ProductPageComponent implements OnInit {
 	productUpdatePage() {
 		this.router.navigate(['/productUpdate'], {queryParams: {id: this.id}});
 	}
+
+	check(id: number) {
+		if (id == this.id) {
+			return "col-2 mb-2 p-2 bg-secondary";
+		}
+		return "col-2 mb-2 p-2";
+	}
+
+	productPage(id: number) {
+		this.router.navigate(['/product'], {queryParams: {id: id}});
+	}
 }
