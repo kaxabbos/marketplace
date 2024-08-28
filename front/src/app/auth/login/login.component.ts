@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {NgIf} from "@angular/common";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {GlobalService} from "../../global.service";
 
 @Component({
@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
 	constructor(
 		private authService: AuthService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute,
 		private global: GlobalService,
 	) {
 	}

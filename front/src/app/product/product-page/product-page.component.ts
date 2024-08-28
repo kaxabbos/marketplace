@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../product.service";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {NavigateDirective} from "../../navigate.directive";
 
 @Component({
 	selector: 'app-product-page',
@@ -12,7 +13,8 @@ import {FormsModule} from "@angular/forms";
 	imports: [
 		NgIf,
 		NgForOf,
-		FormsModule
+		FormsModule,
+		NavigateDirective
 	],
 	templateUrl: './product-page.component.html',
 })
@@ -87,10 +89,6 @@ export class ProductPageComponent implements OnInit {
 
 	public checkOwner() {
 		return this.global.role === 'SELLER' && this.global.userid == this.product.ownerId;
-	}
-
-	productUpdatePage() {
-		this.router.navigate(['/productUpdate'], {queryParams: {id: this.id}});
 	}
 
 	check(id: number) {

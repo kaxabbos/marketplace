@@ -8,10 +8,10 @@
 
 	<div class="d-flex justify-content-center mb-3 row" data-aos="zoom-in">
 		<div class="col-auto">
-			<a (click)="router.navigate(['/products'])" class="btn btn-primary" role="button">Назад</a>
+			<a appNavigate [navigateURL]="'products'"  class="btn btn-primary" role="button">Назад</a>
 		</div>
 		<div *ngIf="checkOwner()" class="col-auto">
-			<a (click)="productUpdatePage()" class="btn btn-success" role="button">Обновить</a>
+			<a appNavigate [navigateURL]="'productUpdate'" [queryParams]="{id: id}" class="btn btn-success" role="button">Обновить</a>
 		</div>
 		<div *ngIf="checkOwner()" class="col-auto">
 			<a (click)="delete()" class="btn btn-danger" role="button">Удалить</a>

@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {Router} from "@angular/router";
 import {GlobalService} from "../../global.service";
 import {NgIf} from "@angular/common";
 import {NavigateDirective} from "../../navigate.directive";
@@ -16,19 +15,11 @@ import {NavigateDirective} from "../../navigate.directive";
 
 export class ProductCardComponent {
 	constructor(
-		private router: Router,
 		private global: GlobalService,
 	) {
 	}
 
 	@Input() product: any;
-
-	getProductPge() {
-		return this.router.navigate(
-			['/product'],
-			{queryParams: {id: this.product.id}}
-		);
-	}
 
 	public getRole() {
 		return this.global.role;

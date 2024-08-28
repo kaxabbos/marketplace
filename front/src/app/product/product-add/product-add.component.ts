@@ -6,6 +6,7 @@ import {NgIf} from "@angular/common";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ProductService} from "../product.service";
 import {CategoryService} from "../../category/category.service";
+import {NavigateDirective} from "../../navigate.directive";
 
 @Component({
 	selector: 'app-product-add',
@@ -13,7 +14,8 @@ import {CategoryService} from "../../category/category.service";
 	imports: [
 		NgIf,
 		ReactiveFormsModule,
-		FormsModule
+		FormsModule,
+		NavigateDirective
 	],
 	templateUrl: './product-add.component.html',
 })

@@ -6,6 +6,7 @@ import {GlobalService} from "../../global.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../product.service";
 import {CategoryService} from "../../category/category.service";
+import {NavigateDirective} from "../../navigate.directive";
 
 @Component({
 	selector: 'app-product-update',
@@ -13,7 +14,8 @@ import {CategoryService} from "../../category/category.service";
 	imports: [
 		FormsModule,
 		NgIf,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		NavigateDirective
 	],
 	templateUrl: './product-update.component.html',
 })
@@ -68,6 +70,7 @@ export class ProductUpdateComponent implements OnInit {
 			}),
 			error: ((e: any) => {
 				console.log(e.error)
+				this.message = e.error.message;
 			})
 		})
 
@@ -87,13 +90,6 @@ export class ProductUpdateComponent implements OnInit {
 				this.message = e.error.message;
 			})
 		})
-	}
-
-	getProductPge() {
-		return this.router.navigate(
-			['/product'],
-			{queryParams: {id: this.id}}
-		);
 	}
 
 }

@@ -18,16 +18,18 @@ export class NavigateDirective {
 	@HostListener('click', ['$event'])
 	@HostListener('auxclick', ['$event'])
 	onClick(event: MouseEvent) {
+		let URL = '/' + this.navigateURL;
 		const navigationExtras: NavigationExtras = {
 			queryParams: this.queryParams
 		};
 
 		if (event.ctrlKey || event.metaKey || event.button == 1) {
-			const urlWithParams = this.router.createUrlTree([this.navigateURL], navigationExtras).toString();
+			const urlWithParams = this.router.createUrlTree([URL], navigationExtras).toString();
 			window.open(urlWithParams, '_blank');
 			event.preventDefault();
 		} else {
-			this.router.navigate([this.navigateURL], navigationExtras);
+			this.router.navigate([URL], navigationExtras);
 		}
 	}
+
 }
