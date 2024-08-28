@@ -7,6 +7,7 @@ import {ProductService} from "./product.service";
 import {ProductCardComponent} from "./product-card/product-card.component";
 import {FormsModule} from "@angular/forms";
 import {CategoryService} from "../category/category.service";
+import {NavigateDirective} from "../navigate.directive";
 
 @Component({
 	selector: 'app-product',
@@ -14,7 +15,8 @@ import {CategoryService} from "../category/category.service";
 	imports: [
 		NgIf,
 		ProductCardComponent,
-		FormsModule
+		FormsModule,
+		NavigateDirective
 	],
 	templateUrl: './product.component.html',
 })

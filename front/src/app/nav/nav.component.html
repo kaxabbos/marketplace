@@ -8,29 +8,29 @@
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item" data-aos="zoom-in">
-					<a (click)="router.navigate(['/'])" class="nav-link" role="button">Главная</a>
+					<a appNavigate [navigateURL]="'/'" class="nav-link" role="button">Главная</a>
 				</li>
 
 				<li class="nav-item" data-aos="zoom-in">
-					<a (click)="router.navigate(['/products'])" class="nav-link" role="button">Товары</a>
+					<a appNavigate [navigateURL]="'/products'" class="nav-link" role="button">Товары</a>
 				</li>
 
 				<li *ngIf="getRole() === 'ADMIN'" class="nav-item" data-aos="zoom-in">
-					<a (click)="router.navigate(['/users'])" class="nav-link" role="button">Пользователи</a>
+					<a appNavigate [navigateURL]="'/users'" class="nav-link" role="button">Пользователи</a>
 				</li>
 				<li *ngIf="getRole() === 'ADMIN'" class="nav-item" data-aos="zoom-in">
-					<a (click)="router.navigate(['/stats'])" class="nav-link" role="button">Аналитика</a>
+					<a appNavigate [navigateURL]="'/stats'" class="nav-link" role="button">Аналитика</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav">
 				<li *ngIf="getRole() === 'NOT'" class="nav-item" data-aos="zoom-in">
-					<a (click)="router.navigate(['/login'])" class="nav-link" role="button">Вход</a>
+					<a appNavigate [navigateURL]="'/login'" class="nav-link" role="button">Вход</a>
 				</li>
 				<li *ngIf="getRole() === 'NOT'" class="nav-item" data-aos="zoom-in">
-					<a (click)="router.navigate(['/reg'])" class="nav-link" role="button">Регистрация</a>
+					<a appNavigate [navigateURL]="'/reg'" class="nav-link" role="button">Регистрация</a>
 				</li>
 				<li *ngIf="getRole() !== 'NOT'" class="nav-item" data-aos="zoom-in">
-					<a (click)="logout()" class="nav-link" role="button">Выход</a>
+					<a  (click)="logout()" class="nav-link" role="button">Выход</a>
 				</li>
 			</ul>
 		</div>

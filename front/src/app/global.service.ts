@@ -1,11 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Injectable({
 	providedIn: 'root'
 })
 
 export class GlobalService {
+
+	constructor(
+		private router: Router,
+	) {
+	}
 
 	get userid(): number {
 		return Number(localStorage.getItem('userid')) || 0;

@@ -43,6 +43,17 @@ public class ProductController {
         );
     }
 
+    @Secured({ADMIN, MANAGER, SELLER, USER})
+    @GetMapping("/bind")
+    public Result findAllByBind(@RequestParam String bind, @RequestParam String ownerId) {
+        return new Result(
+                true,
+                StatusCode.SUCCESS,
+                "Success Find All By Bind",
+                service.findAllByBind(bind, ownerId).stream().map(toDtoConverter::convert).collect(Collectors.toList())
+        );
+    }
+
     @Secured({MANAGER})
     @GetMapping("/{id}/active")
     public Result active(@PathVariable String id) {
@@ -84,17 +95,6 @@ public class ProductController {
                 StatusCode.SUCCESS,
                 "Success Refine",
                 toDtoConverter.convert(service.archive(id))
-        );
-    }
-
-    @Secured({ADMIN, MANAGER, SELLER, USER})
-    @GetMapping("/bind")
-    public Result findAllByBind(@RequestParam String bind, @RequestParam String ownerId) {
-        return new Result(
-                true,
-                StatusCode.SUCCESS,
-                "Success Find All By Bind",
-                service.findAllByBind(bind, ownerId).stream().map(toDtoConverter::convert).collect(Collectors.toList())
         );
     }
 

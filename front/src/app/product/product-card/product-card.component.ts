@@ -2,12 +2,14 @@ import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 import {GlobalService} from "../../global.service";
 import {NgIf} from "@angular/common";
+import {NavigateDirective} from "../../navigate.directive";
 
 @Component({
 	selector: 'app-product-card',
 	standalone: true,
 	imports: [
-		NgIf
+		NgIf,
+		NavigateDirective
 	],
 	templateUrl: './product-card.component.html',
 })

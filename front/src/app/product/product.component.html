@@ -4,7 +4,7 @@
 
 	<div *ngIf="getRole() === 'SELLER'" class="d-flex justify-content-center mb-3 row" data-aos="zoom-in">
 		<div class="col-auto">
-			<a (click)="router.navigate(['/productAdd'])" class="btn btn-primary">Добавить</a>
+			<a appNavigate [navigateURL]="'/productAdd'" class="btn btn-primary">Добавить</a>
 		</div>
 	</div>
 
