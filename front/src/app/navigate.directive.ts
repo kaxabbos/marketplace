@@ -16,14 +16,13 @@ export class NavigateDirective {
 	}
 
 	@HostListener('click', ['$event'])
-	@HostListener('auxclick', ['$event'])
 	onClick(event: MouseEvent) {
 		let URL = '/' + this.navigateURL;
 		const navigationExtras: NavigationExtras = {
 			queryParams: this.queryParams
 		};
 
-		if (event.ctrlKey || event.metaKey || event.button == 1) {
+		if (event.ctrlKey || event.metaKey) {
 			const urlWithParams = this.router.createUrlTree([URL], navigationExtras).toString();
 			window.open(urlWithParams, '_blank');
 			event.preventDefault();
