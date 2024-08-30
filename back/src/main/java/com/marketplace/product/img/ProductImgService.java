@@ -1,12 +1,15 @@
 package com.marketplace.product.img;
 
+import com.marketplace.appUser.UserService;
 import com.marketplace.product.Product;
+import com.marketplace.product.ProductService;
 import com.marketplace.system.exception.BadRequestException;
+import com.marketplace.system.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Objects;
+import java.io.IOException;
 
 import static com.marketplace.util.Global.saveFile;
 
@@ -15,21 +18,46 @@ import static com.marketplace.util.Global.saveFile;
 public class ProductImgService {
 
     private final ProductImgRepository repository;
+    private final ProductService productService;
+    private final UserService userService;
 
-    public void save(MultipartFile file, Product product) {
-        String img;
+    public ProductImg findById(String id) {
+        return repository.findById(Long.parseLong(id)).orElseThrow(() -> new ObjectNotFoundException("Не найдено изображение по ИД " + id));
+    }
 
-        try {
-            if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
-                img = saveFile(file, "product");
-            } else {
-                throw new Exception();
-            }
-        } catch (Exception e) {
+    public Product save(MultipartFile[] files, String productId) {
+        Product product = productService.findById(productId);
+
+        userService.checkOwner(product.getOwner().getId());
+
+        if (files == null || files.length == 0) {
             throw new BadRequestException("Некорректное изображение");
         }
 
-        repository.save(new ProductImg(img, product));
+        String[] imgs = new String[files.length];
+
+        for (int i = 0; i < files.length; i++) {
+            try {
+                imgs[i] = saveFile(files[i], "product");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        for (String img : imgs) {
+            repository.save(new ProductImg(img, product));
+        }
+
+        return productService.findById(productId);
+    }
+
+    public Product delete(String productId, String imgId) {
+        ProductImg productImg = findById(imgId);
+
+        userService.checkOwner(productImg.getProduct().getOwner().getId());
+
+        repository.deleteById(productImg.getId());
+        return productService.findById(productId);
     }
 
 }

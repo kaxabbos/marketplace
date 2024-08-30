@@ -6,6 +6,7 @@ import {ProductService} from "../product.service";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NavigateDirective} from "../../navigate.directive";
+import {ProductImgService} from "../product.img.service";
 
 @Component({
 	selector: 'app-product-page',
@@ -38,10 +39,11 @@ export class ProductPageComponent implements OnInit {
 		public router: Router,
 		private activatedRoute: ActivatedRoute,
 		private productService: ProductService,
+		private productImgService: ProductImgService,
 	) {
 	}
 
-	productsSorted() {
+	get productsSorted() {
 		let temp = this.products;
 		temp = temp.sort((a, b) => a.id < b.id ? 1 : -1);
 		return temp;
@@ -118,7 +120,6 @@ export class ProductPageComponent implements OnInit {
 	active() {
 		this.productService.active(this.id).subscribe({
 			next: ((res: any) => {
-				this.id = res.data.id;
 				this.product = res.data;
 				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
 			}),
@@ -132,7 +133,6 @@ export class ProductPageComponent implements OnInit {
 	refine() {
 		this.productService.refine(this.id, this.refineMessage).subscribe({
 			next: ((res: any) => {
-				this.id = res.data.id;
 				this.product = res.data;
 				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
 				this.refineMessage = '';
@@ -147,7 +147,6 @@ export class ProductPageComponent implements OnInit {
 	waiting() {
 		this.productService.waiting(this.id).subscribe({
 			next: ((res: any) => {
-				this.id = res.data.id;
 				this.product = res.data;
 				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
 			}),
@@ -161,7 +160,32 @@ export class ProductPageComponent implements OnInit {
 	archive() {
 		this.productService.archive(this.id).subscribe({
 			next: ((res: any) => {
-				this.id = res.data.id;
+				this.product = res.data;
+				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
+			}),
+			error: ((e) => {
+				console.log(e.error);
+				this.message = e.error.message;
+			})
+		})
+	}
+
+	updateImd(event: any) {
+		this.productImgService.save(this.id, event.target.files).subscribe({
+			next: ((res: any) => {
+				this.product = res.data;
+				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
+			}),
+			error: ((e) => {
+				console.log(e.error);
+				this.message = e.error.message;
+			})
+		})
+	}
+
+	deleteImg(id: number) {
+		this.productImgService.delete(this.id, id).subscribe({
+			next: ((res: any) => {
 				this.product = res.data;
 				this.products = this.products.map((value) => value.id == this.id ? res.data : value);
 			}),

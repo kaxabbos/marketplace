@@ -70,6 +70,7 @@ public class ProductService {
         Product product = findById(id);
         userService.checkOwner(product.getOwner().getId());
         product.setStatus(ProductStatus.WAITING);
+        product.setRefine("");
         return repository.save(product);
     }
 

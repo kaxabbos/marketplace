@@ -8,10 +8,11 @@
 
 	<div class="d-flex justify-content-center mb-3 row" data-aos="zoom-in">
 		<div class="col-auto">
-			<a appNavigate [navigateURL]="'products'"  class="btn btn-primary" role="button">Назад</a>
+			<a appNavigate [navigateURL]="'products'" class="btn btn-primary" role="button">Назад</a>
 		</div>
 		<div *ngIf="checkOwner()" class="col-auto">
-			<a appNavigate [navigateURL]="'productUpdate'" [queryParams]="{id: id}" class="btn btn-success" role="button">Обновить</a>
+			<a appNavigate [navigateURL]="'productUpdate'" [queryParams]="{id: id}" class="btn btn-success"
+			   role="button">Обновить</a>
 		</div>
 		<div *ngIf="checkOwner()" class="col-auto">
 			<a (click)="delete()" class="btn btn-danger" role="button">Удалить</a>
@@ -48,8 +49,8 @@
 			<p class="fs-4 m-0">{{ 'Количество: ' + product.count }}</p>
 			<p class="fs-4 m-0">{{ 'Цена: ' + product.price }}</p>
 		</div>
-		<div class="col-3 overflow-auto" style="height: 400px">
-			<div *ngFor="let i of productsSorted()" [class]="check(i.id)">
+		<div class="col-3 overflow-y-auto" style="height: 400px">
+			<div *ngFor="let i of productsSorted" [class]="check(i.id)">
 				<a (click)="productPage(i.id)" type="button">
 					<div class="row">
 						<div class="col">
@@ -67,6 +68,19 @@
 		<div class="col-12 mt-2">
 			<p class="fs-4 m-0">{{ 'Описание: ' + product.description }}</p>
 		</div>
+	</div>
+
+	<input *ngIf="checkOwner()" type="file" (change)="updateImd($event)" class="form-control mb-3" data-aos="fade-up"
+		   multiple
+		   accept="image/*">
+
+	<div *ngIf="product.imgs.length > 0" class="row">
+		@for (img of product.imgs; track img.id) {
+			<div class="col-4 mb-2" data-aos="fade-up">
+				<a *ngIf="checkOwner()" (click)="deleteImg(img.id)" class="w-100 btn btn-danger rounded-5">Удалить</a>
+				<img [src]="img.img" alt="img" class="object-fit-cover p-1 m-1 rounded-5 shadow border w-100" style="height: 500px">
+			</div>
+		}
 	</div>
 
 </div>
