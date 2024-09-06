@@ -1,5 +1,6 @@
 package com.marketplace.util;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -33,7 +34,6 @@ public class Global {
 
         return dir.toString();
     }
-
 
     public static String getDatetime() {
         return LocalDateTime.now().toString();

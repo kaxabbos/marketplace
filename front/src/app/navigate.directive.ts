@@ -17,7 +17,7 @@ export class NavigateDirective {
 
 	@HostListener('click', ['$event'])
 	onClick(event: MouseEvent) {
-		let URL = '/' + this.navigateURL;
+		let URL: string = '/' + this.navigateURL;
 		const navigationExtras: NavigationExtras = {
 			queryParams: this.queryParams
 		};

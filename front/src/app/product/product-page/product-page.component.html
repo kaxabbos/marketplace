@@ -29,7 +29,7 @@
 		</div>
 	</div>
 
-	<div *ngIf="getRole() === 'MANAGER' && product.status === 'WAITING'" class="mb-3" data-aos="zoom-in">
+	<div *ngIf="getRole() === 'MANAGER' && (product.status === 'WAITING' || product.status === 'ACTIVE')" class="mb-3" data-aos="zoom-in">
 		<textarea [(ngModel)]="refineMessage" class="form-control mb-2" placeholder="Причина доработки"></textarea>
 		<a (click)="refine()" *ngIf="refineMessage.length > 0" class="btn btn-secondary w-100" data-aos="zoom-in"
 		   role="button">На доработку</a>

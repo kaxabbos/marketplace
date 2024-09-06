@@ -1,6 +1,7 @@
 package com.marketplace.appUser;
 
 import com.marketplace.enums.Role;
+import com.marketplace.ordering.Ordering;
 import com.marketplace.product.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -37,6 +38,8 @@ public class AppUser implements Serializable {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Ordering> orderings = new ArrayList<>();
 
     public AppUser(String username) {
         this.username = username;

@@ -3,6 +3,7 @@ package com.marketplace.product;
 import com.marketplace.appUser.AppUser;
 import com.marketplace.category.Category;
 import com.marketplace.enums.ProductStatus;
+import com.marketplace.ordering.Ordering;
 import com.marketplace.product.img.ProductImg;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -43,6 +44,8 @@ public class Product {
     private AppUser owner;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImg> imgs = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Ordering> orderings = new ArrayList<>();
 
     public Product(String name, String bind, int count, float price, String description) {
         this.name = name;
