@@ -18,7 +18,7 @@
 			<a (click)="delete()" class="btn btn-danger" role="button">Удалить</a>
 		</div>
 
-		<div *ngIf="getRole() === 'MANAGER' && product.status === 'WAITING'" class="col-auto">
+		<div *ngIf="role === 'MANAGER' && product.status === 'WAITING'" class="col-auto">
 			<a (click)="active()" class="btn btn-secondary" role="button">Подтвердить</a>
 		</div>
 		<div *ngIf="checkOwner() && product.status !== 'ARCHIVE'" class="col-auto">
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 
-	<div *ngIf="getRole() === 'MANAGER' && (product.status === 'WAITING' || product.status === 'ACTIVE')" class="mb-3" data-aos="zoom-in">
+	<div *ngIf="role === 'MANAGER' && (product.status === 'WAITING' || product.status === 'ACTIVE')" class="mb-3" data-aos="zoom-in">
 		<textarea [(ngModel)]="refineMessage" class="form-control mb-2" placeholder="Причина доработки"></textarea>
 		<a (click)="refine()" *ngIf="refineMessage.length > 0" class="btn btn-secondary w-100" data-aos="zoom-in"
 		   role="button">На доработку</a>
@@ -40,9 +40,19 @@
 			<img [src]="product.img" alt="img" class="object-fit-cover w-100" style="height: 400px">
 		</div>
 		<div class="col">
-			<p *ngIf="checkOwner() || getRole() === 'MANAGER'"
+			<div *ngIf="role === 'USER'" class="row" data-aos="fade-up">
+				<div class="col">
+					<input type="number" [min]="1" [max]="product.count" class="form-control" [(ngModel)]="count">
+				</div>
+				<div *ngIf="count > 0" class="col-auto" data-aos="zoom-in">
+					<button type="button" class="btn btn-primary" (click)="ordering()">Заказать</button>
+				</div>
+			</div>
+
+
+			<p *ngIf="checkOwner() || role === 'MANAGER'"
 			   class="fs-4 m-0">{{ 'Статус: ' + product.statusName }}</p>
-			<p *ngIf="(checkOwner() || getRole() === 'MANAGER') && product.refine.length > 0"
+			<p *ngIf="(checkOwner() || role === 'MANAGER') && product.refine.length > 0"
 			   class="fs-4 m-0">{{ 'Причина доработки: ' + product.refine }}</p>
 			<p *ngIf="checkOwner()" class="fs-4 m-0">{{ 'Связующее слово: ' + product.bind }}</p>
 			<p class="fs-4 m-0">{{ 'Категория: ' + product.category }}</p>
@@ -74,7 +84,7 @@
 		   multiple
 		   accept="image/*">
 
-	<div *ngIf="product.imgs.length > 0" class="row">
+	<div *ngIf="product.imgs !== null" class="row">
 		@for (img of product.imgs; track img.id) {
 			<div class="col-4 mb-2" data-aos="fade-up">
 				<a *ngIf="checkOwner()" (click)="deleteImg(img.id)" class="w-100 btn btn-danger rounded-5">Удалить</a>

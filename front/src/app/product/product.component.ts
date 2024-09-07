@@ -62,7 +62,7 @@ export class ProductComponent implements OnInit {
 		this.categoryService.findAll();
 	}
 
-	getRole() {
+	get role() {
 		return this.global.role;
 	}
 

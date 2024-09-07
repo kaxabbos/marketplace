@@ -15,21 +15,25 @@
 					<a appNavigate [navigateURL]="'products'" class="nav-link" role="button">Товары</a>
 				</li>
 
-				<li *ngIf="getRole() === 'ADMIN'" class="nav-item" data-aos="zoom-in">
+				<li *ngIf="role === 'USER' || role === 'SELLER'" class="nav-item" data-aos="zoom-in">
+					<a appNavigate [navigateURL]="'orderings'" class="nav-link" role="button">Заказы</a>
+				</li>
+
+				<li *ngIf="role === 'ADMIN'" class="nav-item" data-aos="zoom-in">
 					<a appNavigate [navigateURL]="'users'" class="nav-link" role="button">Пользователи</a>
 				</li>
-				<li *ngIf="getRole() === 'ADMIN'" class="nav-item" data-aos="zoom-in">
+				<li *ngIf="role === 'ADMIN'" class="nav-item" data-aos="zoom-in">
 					<a appNavigate [navigateURL]="'stats'" class="nav-link" role="button">Аналитика</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav">
-				<li *ngIf="getRole() === 'NOT'" class="nav-item" data-aos="zoom-in">
+				<li *ngIf="role === 'NOT'" class="nav-item" data-aos="zoom-in">
 					<a appNavigate [navigateURL]="'login'" class="nav-link" role="button">Вход</a>
 				</li>
-				<li *ngIf="getRole() === 'NOT'" class="nav-item" data-aos="zoom-in">
+				<li *ngIf="role === 'NOT'" class="nav-item" data-aos="zoom-in">
 					<a appNavigate [navigateURL]="'reg'" class="nav-link" role="button">Регистрация</a>
 				</li>
-				<li *ngIf="getRole() !== 'NOT'" class="nav-item" data-aos="zoom-in">
+				<li *ngIf="role !== 'NOT'" class="nav-item" data-aos="zoom-in">
 					<a  (click)="logout()" class="nav-link" role="button">Выход</a>
 				</li>
 			</ul>

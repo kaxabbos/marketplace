@@ -38,7 +38,7 @@ public class Ordering {
     }
 
     public float getTotal() {
-        if (status == OrderingStatus.WAITING) {
+        if (price == 0) {
             return count * product.getPrice();
         }
         return count * price;

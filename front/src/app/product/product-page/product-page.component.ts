@@ -7,6 +7,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NavigateDirective} from "../../navigate.directive";
 import {ProductImgService} from "../product.img.service";
+import {OrderingService} from "../../ordering/ordering.service";
 
 @Component({
 	selector: 'app-product-page',
@@ -31,7 +32,8 @@ export class ProductPageComponent implements OnInit {
 		name: ''
 	};
 
-	products: any[] = []
+	products: any[] = [];
+	count: any;
 
 	constructor(
 		private authService: AuthService,
@@ -40,6 +42,7 @@ export class ProductPageComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private productService: ProductService,
 		private productImgService: ProductImgService,
+		private orderingService: OrderingService,
 	) {
 	}
 
@@ -51,7 +54,7 @@ export class ProductPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.authService.getUserProfile().add(() => {
-			if (this.getRole() === 'NOT') this.router.navigate(['/login']);
+			if (this.role === 'NOT') this.router.navigate(['/login']);
 		});
 
 		this.activatedRoute.queryParams.subscribe(params => {
@@ -85,7 +88,7 @@ export class ProductPageComponent implements OnInit {
 		})
 	}
 
-	public getRole() {
+	get role() {
 		return this.global.role;
 	}
 
@@ -194,5 +197,21 @@ export class ProductPageComponent implements OnInit {
 				this.message = e.error.message;
 			})
 		})
+	}
+
+	ordering() {
+		this.orderingService.save(this.count, this.id).subscribe({
+			next: (() => {
+				this.message = "Заказ оформлен";
+			}),
+			error: ((e) => {
+				console.log(e.error);
+				this.message = e.error.message;
+			})
+		})
+
+		setTimeout(() => {
+			this.message = "";
+		}, 10 * 1000)
 	}
 }

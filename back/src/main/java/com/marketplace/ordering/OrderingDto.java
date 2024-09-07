@@ -1,5 +1,7 @@
 package com.marketplace.ordering;
 
+import com.marketplace.product.ProductDto;
+
 public record OrderingDto(
         Long id,
         int count,
@@ -7,7 +9,7 @@ public record OrderingDto(
         float total,
         String status,
         String statusName,
-        Long productId,
-        Long ownerId
+        Long ownerId,
+        ProductDto product
 ) {
 }

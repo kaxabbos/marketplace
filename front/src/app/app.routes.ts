@@ -9,6 +9,7 @@ import {ProductComponent} from "./product/product.component";
 import {ProductAddComponent} from "./product/product-add/product-add.component";
 import {ProductPageComponent} from "./product/product-page/product-page.component";
 import {ProductUpdateComponent} from "./product/product-update/product-update.component";
+import {OrderingComponent} from "./ordering/ordering.component";
 
 export const routes: Routes = [
 	{path: "", component: MainComponent},
@@ -23,6 +24,7 @@ export const routes: Routes = [
 	{path: "productAdd", component: ProductAddComponent},
 	{path: "productUpdate", component: ProductUpdateComponent},
 
+	{path: "orderings", component: OrderingComponent},
 
 	{path: "stats", component: StatsComponent},
 

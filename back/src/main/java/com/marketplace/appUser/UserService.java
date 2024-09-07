@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
 
     public void checkOwner(Long id) {
         if (!getCurrentUser().getId().equals(id)) {
-            throw new BadRequestException("Нету прав");
+            throw new BadRequestException("У вас нету прав");
         }
     }
 

@@ -1,0 +1,51 @@
+<div class="card rounded-4">
+	<div class="card-header rounded-4">
+		<img [src]="ordering.product.img" alt="img" class="object-fit-cover w-100 rounded-4" style="height: 200px">
+		<p class="text-center fs-5 m-0">
+			<a appNavigate [navigateURL]="'product'" [queryParams]="{ id:ordering.product.id }" role="button">
+				{{ ordering.product.name }}
+			</a>
+		</p>
+	</div>
+	<div class="card-body">
+		<p class="fs-6 m-0">{{ 'Статус: ' + ordering.statusName }}</p>
+		<p class="fs-6 m-0">{{ 'Цена за единицу: ' + ordering.product.price }}</p>
+		<p *ngIf="ordering.status === 'WAITING'"
+		   class="fs-6 m-0">{{ 'Цена: ' + ((ordering.product.price * ordering.count) | number : '1.2-2') }}</p>
+		<p *ngIf="ordering.status !== 'WAITING'"
+		   class="fs-6 m-0">{{ 'Цена: ' + (ordering.price | number : '1.2-2') }}</p>
+		<p *ngIf="ordering.status !== 'WAITING'" class="fs-6 m-0">{{ 'Количество: ' + ordering.count }}</p>
+		<div *ngIf="ordering.status === 'WAITING'">
+			<p class="fs-6 m-0">Выбранное количество</p>
+			<div class="row my-1">
+				<div class="col">
+					<input type="number" min="1" [max]="ordering.product.count" class="form-control"
+						   [(ngModel)]="ordering.count">
+				</div>
+				<div *ngIf="ordering.count > 0" class="col-auto" data-aos="zoom-in">
+					<button role="button" class="btn btn-primary" (click)="update()">Обновить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-footer rounded-4">
+		<div class="row">
+			<div *ngIf="checkOwner() && ordering.status === 'WAITING'" class="col-auto">
+				<button role="button" class="btn btn-primary" (click)="ordered()">Заказать</button>
+			</div>
+			<div *ngIf="checkSeller() && ordering.status === 'ORDERED'" class="col-auto">
+				<button role="button" class="btn btn-primary" (click)="done()">Подтвердить</button>
+			</div>
+			<div *ngIf="checkSeller() && ordering.status === 'ORDERED'" class="col-auto">
+				<button role="button" class="btn btn-primary" (click)="rejected()">Отказать</button>
+			</div>
+			<div *ngIf="checkSeller() && ordering.status === 'DONE'" class="col-auto">
+				<button role="button" class="btn btn-primary" (click)="delivered()">Доставить</button>
+			</div>
+			<div *ngIf="checkOwner() && ordering.status === 'DELIVERED'" class="col-auto">
+				<button role="button" class="btn btn-primary" (click)="accepted()">Принять</button>
+			</div>
+
+		</div>
+	</div>
+</div>

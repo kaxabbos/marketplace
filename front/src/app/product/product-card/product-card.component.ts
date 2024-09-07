@@ -21,11 +21,11 @@ export class ProductCardComponent {
 
 	@Input() product: any;
 
-	public getRole() {
+	get role() {
 		return this.global.role;
 	}
 
-	public checkOwner() {
+	checkOwner() {
 		return this.global.role === 'SELLER' && this.global.userid == this.product.ownerId;
 	}
 }

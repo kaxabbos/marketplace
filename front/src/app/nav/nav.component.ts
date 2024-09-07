@@ -23,7 +23,7 @@ export class NavComponent {
 	) {
 	}
 
-	getRole() {
+	get role() {
 		return this.global.role;
 	}
 

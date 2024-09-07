@@ -7,11 +7,15 @@ import lombok.Getter;
 @Getter
 public enum OrderingStatus {
     WAITING("Ожидание"),
+
     ORDERED("Заказано"),
+
     DONE("Подтверждено"),
-    DELIVERED("Доставлено"),
-    ACCEPTED("Принято"),
     REJECTED("Отказано"),
+
+    DELIVERED("Доставлено"),
+
+    ACCEPTED("Принято"),
     ;
 
     private final String name;
