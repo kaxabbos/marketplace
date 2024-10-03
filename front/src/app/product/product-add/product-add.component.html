@@ -6,10 +6,6 @@
 		<a appNavigate [navigateURL]="'products'" class="btn btn-primary">Назад</a>
 	</div>
 
-	<div *ngIf="message" class="alert alert-primary text-center fw-bold mb-5" data-aos="zoom-in" role="alert">
-		{{ message }}
-	</div>
-
 	<form [formGroup]="productForm" (ngSubmit)="save()" class="row" data-aos="fade-up">
 		<div class="col-6 mb-2">
 			<p class="fs-4 m-0">Наименование</p>

@@ -2,10 +2,6 @@
 
 	<h1 class="text-center mb-5" data-aos="zoom-in">Заказы</h1>
 
-	<div *ngIf="message" class="alert alert-primary text-center fw-bold" data-aos="zoom-in" role="alert">
-		{{ message }}
-	</div>
-
 	<div class="row">
 		@for (i of sorted; track i.id) {
 			<div class="col-3 mb-2" data-aos="fade-up">

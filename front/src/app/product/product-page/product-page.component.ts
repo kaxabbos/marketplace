@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {NavigateDirective} from "../../navigate.directive";
 import {ProductImgService} from "../product.img.service";
 import {OrderingService} from "../../ordering/ordering.service";
+import {AlertService} from "../../alert/alert.service";
 
 @Component({
 	selector: 'app-product-page',
@@ -23,7 +24,6 @@ import {OrderingService} from "../../ordering/ordering.service";
 
 export class ProductPageComponent implements OnInit {
 
-	message: string = '';
 	refineMessage: string = '';
 
 	id: number = 0;
@@ -43,6 +43,7 @@ export class ProductPageComponent implements OnInit {
 		private productService: ProductService,
 		private productImgService: ProductImgService,
 		private orderingService: OrderingService,
+		private alert: AlertService,
 	) {
 	}
 
@@ -115,7 +116,7 @@ export class ProductPageComponent implements OnInit {
 			}),
 			error: ((e: any) => {
 				console.log(e.error);
-				this.message = e.error.message;
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
 	}
@@ -128,7 +129,7 @@ export class ProductPageComponent implements OnInit {
 			}),
 			error: ((e) => {
 				console.log(e.error);
-				this.message = e.error.message;
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
 	}
@@ -142,7 +143,7 @@ export class ProductPageComponent implements OnInit {
 			}),
 			error: ((e) => {
 				console.log(e.error);
-				this.message = e.error.message;
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
 	}
@@ -155,7 +156,7 @@ export class ProductPageComponent implements OnInit {
 			}),
 			error: ((e) => {
 				console.log(e.error);
-				this.message = e.error.message;
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
 	}
@@ -168,7 +169,7 @@ export class ProductPageComponent implements OnInit {
 			}),
 			error: ((e) => {
 				console.log(e.error);
-				this.message = e.error.message;
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
 	}
@@ -181,7 +182,7 @@ export class ProductPageComponent implements OnInit {
 			}),
 			error: ((e) => {
 				console.log(e.error);
-				this.message = e.error.message;
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
 	}
@@ -194,7 +195,7 @@ export class ProductPageComponent implements OnInit {
 			}),
 			error: ((e) => {
 				console.log(e.error);
-				this.message = e.error.message;
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
 	}
@@ -202,16 +203,12 @@ export class ProductPageComponent implements OnInit {
 	ordering() {
 		this.orderingService.save(this.count, this.id).subscribe({
 			next: (() => {
-				this.message = "Заказ оформлен";
+				this.alert.showAlertMessage("Заказ оформлен");
 			}),
 			error: ((e) => {
 				console.log(e.error);
-				this.message = e.error.message;
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
-
-		setTimeout(() => {
-			this.message = "";
-		}, 10 * 1000)
 	}
 }

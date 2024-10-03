@@ -5,6 +5,7 @@ import {OrderingService} from "../ordering.service";
 import {DecimalPipe, NgIf} from "@angular/common";
 import {OrderingComponent} from "../ordering.component";
 import {GlobalService} from "../../global.service";
+import {AlertService} from "../../alert/alert.service";
 
 @Component({
 	selector: 'app-ordering-card',
@@ -25,15 +26,8 @@ export class OrderingCardComponent {
 		private orderingService: OrderingService,
 		private orderingComponent: OrderingComponent,
 		private global: GlobalService,
+		private alert: AlertService,
 	) {
-	}
-
-	get message() {
-		return this.orderingComponent.message;
-	}
-
-	set message(message: string) {
-		this.orderingComponent.message = message;
 	}
 
 	update() {
@@ -43,10 +37,7 @@ export class OrderingCardComponent {
 			}),
 			error: ((e) => {
 				console.log(e.error);
-				this.message = e.error.message;
-				setTimeout(() => {
-					this.message = '';
-				}, 10 * 1000);
+				this.alert.showAlertMessage(e.error.message)
 			})
 		})
 	}
@@ -61,10 +52,7 @@ export class OrderingCardComponent {
 
 	statusError(e: any) {
 		console.log(e.error);
-		this.message = e.error.message;
-		setTimeout(() => {
-			this.message = '';
-		}, 10 * 1000);
+		this.alert.showAlertMessage(e.error.message)
 	}
 
 	ordered() {
@@ -121,6 +109,5 @@ export class OrderingCardComponent {
 			})
 		})
 	}
-
 
 }

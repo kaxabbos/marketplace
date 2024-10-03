@@ -19,7 +19,6 @@ import {NgIf} from "@angular/common";
 export class OrderingComponent implements OnInit {
 
 	orderings: any[] = [];
-	message: string = '';
 
 	constructor(
 		private orderingService: OrderingService,

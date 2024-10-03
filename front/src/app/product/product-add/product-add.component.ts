@@ -7,6 +7,7 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {ProductService} from "../product.service";
 import {CategoryService} from "../../category/category.service";
 import {NavigateDirective} from "../../navigate.directive";
+import {AlertService} from "../../alert/alert.service";
 
 @Component({
 	selector: 'app-product-add',
@@ -32,14 +33,13 @@ export class ProductAddComponent implements OnInit {
 
 	categories: any[] = [];
 
-	message: string = '';
-
 	constructor(
 		private authService: AuthService,
 		private global: GlobalService,
 		public router: Router,
 		private productService: ProductService,
 		private categoryService: CategoryService,
+		private alert: AlertService,
 	) {
 	}
 
@@ -61,7 +61,8 @@ export class ProductAddComponent implements OnInit {
 				this.router.navigate(['/product'], {queryParams: {id: res.data.id}});
 			}),
 			error: ((e: any) => {
-				this.message = e.error.message;
+				console.log(e.error)
+				this.alert.showAlertMessage(e.error.message);
 			})
 		})
 	}

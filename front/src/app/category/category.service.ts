@@ -29,7 +29,7 @@ export class CategoryService {
 				})
 			}),
 			error: ((e: any) => {
-				console.log(e.error.message)
+				console.log(e.error)
 			})
 		})
 	}
