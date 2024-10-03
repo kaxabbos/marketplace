@@ -173,7 +173,7 @@ export class ProductPageComponent implements OnInit {
 		})
 	}
 
-	updateImd(event: any) {
+	updateImg(event: any) {
 		this.productImgService.save(this.id, event.target.files).subscribe({
 			next: ((res: any) => {
 				this.product = res.data;
